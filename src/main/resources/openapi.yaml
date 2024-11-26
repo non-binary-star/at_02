@@ -1,0 +1,78 @@
+openapi: 3.0.3
+info:
+  title: Contacts API
+  description: API для управления контактами.
+  version: 1.0.0
+paths:
+  /contacts:
+    post:
+      summary: Создать контакт
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        204:
+        400:
+    get:
+      summary: Получить список контактов
+      responses:
+        200:
+          description: Список контактов.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+  /contacts/{contactId}:
+    put:
+      summary: Изменить контакт
+      parameters:
+        - name: contactId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Идентификатор контакта.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        200:
+        404:
+    delete:
+      summary: Удалить контакт
+      parameters:
+        - name: contactId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Идентификатор контакта.
+      responses:
+        204:
+        404:
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        note:
+          type: string
+      required:
+        - name
+        - phone
